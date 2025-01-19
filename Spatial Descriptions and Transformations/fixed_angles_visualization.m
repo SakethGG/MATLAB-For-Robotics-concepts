@@ -1,21 +1,24 @@
 
-% This code helps you visualize and understand Euler angle rotations in 3D space.
+% This code helps you visualize and understand fixed-angle rotations in 3D space.
+% It demonstrates how a coordinate frame rotates step-by-step relative to a fixed frame, 
+% based on the order of rotations (e.g., XYZ, ZYX) and angles you provide.
 %
 % Theory:
-% In Euler angle rotation, a frame rotates around its own (local) axes one by one.
-% The order of rotations (e.g., first X, then Y, then Z) changes the final orientation.
+% In fixed-angle rotation, the frame rotates around the fixed (global) axes in sequence.
+% The order of rotations (e.g., first X, then Y, then Z) determines the final orientation.
 %
 % Rotation Matrix Multiplication:
-% - To combine rotations, multiply the rotation matrices in the order of the specified sequence.
-% - For example, if the rotation order is ZYX, compute the combined matrix as R = Rz * Ry * Rx.
+% - To combine rotations, multiply the rotation matrices in the reverse order of the specified sequence.
+% - For example, if the rotation order is ZYX, compute the combined matrix as R = Rx * Ry * Rz.
+
 %
 % Key features:
-% - Demonstrates step-by-step rotations using the Euler angle convention.
-% - Animates the rotation process for clear visualization.
+% - Demonstrates step-by-step rotations using the fixed-angle convention.
+% - Animates the rotation process for easy visualization.
 % - Highlights how rotation order affects the result.
 
 
-% Define the Euler rotation sequence and initial angles
+% Define the fixed-angle rotation sequence and initial angles
 rotation_order = input('Enter the rotation order (e.g., ZYX): ', 's');
 alpha = input('Enter the first rotation angle (in degrees): ');
 beta = input('Enter the second rotation angle (in degrees): ');
@@ -26,13 +29,13 @@ alpha = deg2rad(alpha);
 beta = deg2rad(beta);
 gamma = deg2rad(gamma);
 
-% Define rotation matrices
+% Define rotation matrices for fixed axes
 R_x = @(theta) [1, 0, 0; 0, cos(theta), -sin(theta); 0, sin(theta), cos(theta)];
 R_y = @(theta) [cos(theta), 0, sin(theta); 0, 1, 0; -sin(theta), 0, cos(theta)];
 R_z = @(theta) [cos(theta), -sin(theta), 0; sin(theta), cos(theta), 0; 0, 0, 1];
 
-% Initialize identity matrix
-R = eye(3);
+% Initialize the total rotation matrix
+R_total = eye(3);
 
 % Plot initial coordinate frame
 figure;
@@ -41,60 +44,60 @@ grid on;
 hold on;
 xlabel('X'); ylabel('Y'); zlabel('Z');
 
-% Plot the fixed coordinate frame (stationary)
+% Plot the fixed coordinate frame
 plot_axes(eye(3), 'b', 'Fixed', 'Xa', 'Ya', 'Za'); % Fixed frame in blue
 
 % Initial plot for rotating frame
-plot_axes(R, 'k', 'Initial', 'Xb', 'Yb', 'Zb');
+plot_axes(R_total, 'k', 'Initial', 'Xb', 'Yb', 'Zb');
 
-% Rotation sequence
+% Rotation sequence for fixed angles
 for i = 1:length(rotation_order)
     switch rotation_order(i)
         case 'X'
-            angles = linspace(0, alpha, 50);
+            angles = linspace(0, alpha, 100); % Fixed-angle rotation around X
             for angle = angles
-                R_step = R_x(angle);
-                R_new = R * R_step;
+                R_step = R_x(angle); % Compute incremental rotation
+                R_current = R_step * R_total; % Apply rotation to the total
                 % Clear previous plots
                 cla;
                 hold on;
                 % Plot fixed coordinate frame
-                plot_axes(eye(3), 'b', 'Fixed', 'Xa', 'Ya', 'Za'); % Fixed frame in blue
+                plot_axes(eye(3), 'b', 'Fixed', 'Xa', 'Ya', 'Za');
                 % Plot updated rotating coordinate frame
-                plot_axes(R_new, 'r', 'Rotated', 'Xb', 'Yb', 'Zb');
-                pause(0.01); % Decrease pause duration for faster animation
+                plot_axes(R_current, 'r', 'Rotated', 'Xb', 'Yb', 'Zb');
+                pause(0.01); % Smooth animation
             end
-            R = R_new; % Update the total rotation matrix
+            R_total = R_x(alpha) * R_total; % Update total rotation matrix
         case 'Y'
-            angles = linspace(0, beta, 50);
+            angles = linspace(0, beta, 100); % Fixed-angle rotation around Y
             for angle = angles
                 R_step = R_y(angle);
-                R_new = R * R_step;
+                R_current = R_step * R_total;
                 % Clear previous plots
                 cla;
                 hold on;
                 % Plot fixed coordinate frame
-                plot_axes(eye(3), 'b', 'Fixed', 'Xa', 'Ya', 'Za'); % Fixed frame in blue
+                plot_axes(eye(3), 'b', 'Fixed', 'Xa', 'Ya', 'Za');
                 % Plot updated rotating coordinate frame
-                plot_axes(R_new, 'g', 'Rotated', 'Xb', 'Yb', 'Zb');
-                pause(0.01); % Decrease pause duration for faster animation
+                plot_axes(R_current, 'g', 'Rotated', 'Xb', 'Yb', 'Zb');
+                pause(0.01);
             end
-            R = R_new; % Update the total rotation matrix
+            R_total = R_y(beta) * R_total;
         case 'Z'
-            angles = linspace(0, gamma, 50);
+            angles = linspace(0, gamma, 100); % Fixed-angle rotation around Z
             for angle = angles
                 R_step = R_z(angle);
-                R_new = R * R_step;
+                R_current = R_step * R_total;
                 % Clear previous plots
                 cla;
                 hold on;
                 % Plot fixed coordinate frame
-                plot_axes(eye(3), 'b', 'Fixed', 'Xa', 'Ya', 'Za'); % Fixed frame in blue
+                plot_axes(eye(3), 'b', 'Fixed', 'Xa', 'Ya', 'Za');
                 % Plot updated rotating coordinate frame
-                plot_axes(R_new, 'm', 'Rotated', 'Xb', 'Yb', 'Zb');
-                pause(0.01); % Decrease pause duration for faster animation
+                plot_axes(R_current, 'm', 'Rotated', 'Xb', 'Yb', 'Zb');
+                pause(0.01);
             end
-            R = R_new; % Update the total rotation matrix
+            R_total = R_z(gamma) * R_total;
     end
 end
 
