@@ -1,4 +1,4 @@
-# MATLAB-For Robotics concepts
+# MATLAB-For-Robotics-concepts
 
 Welcome to the **MATLAB - For Robotics Concepts** repository! This repository is designed to help students, researchers, and robotics enthusiasts **understand fundamental robotics concepts through easy-to-follow MATLAB visualisations and animations**.
 
@@ -13,7 +13,7 @@ Each script is **well-documented and includes step-by-step animations** to simpl
 The repository is organized into chapters corresponding to key robotics topics:
 
 ```
-MATLAB-Robotics-Concepts/
+MATLAB-For-Robotics-Concepts/
 ├── Spatial_Transformations/
 ├── Manipulator_Kinematics/
 ├── Inverse_Kinematics/
