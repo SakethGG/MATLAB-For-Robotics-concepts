@@ -93,7 +93,7 @@ For any issues or feature requests, open an **Issue** on GitHub.
 ## **📩 Contact & Support**
 For questions, suggestions, or collaboration opportunities, feel free to reach out!
 
-📧 Email: vsaketh7716@gmail.com 
+📧 Email: sakethvegesna.online@gmail.com 
 🌐 GitHub: SakethGG 
 
 If you find this repository useful, **give it a ⭐️ on GitHub!** 😊
