@@ -1,0 +1,1 @@
+This section explores the forward kinematics of robotic manipulators, providing MATLAB implementations to compute and visualize the position and orientation of the end-effector. Using Denavit-Hartenberg (D-H) parameters and transformation matrices, the codes help in understanding how joint movements translate into overall manipulator motion. 
