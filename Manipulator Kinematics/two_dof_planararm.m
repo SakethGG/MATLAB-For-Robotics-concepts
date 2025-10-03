@@ -1,4 +1,5 @@
-clc; clear; close all;
+clc;
+clear all;
 
 % Link lengths
 L1 = 1;  % Length of first link
