@@ -23,7 +23,6 @@ MATLAB-For-Robotics-Concepts/
 ├── Linear_Control/
 ├── Nonlinear_Control/
 ├── Force_Control/
-├── Programming/
 ├── Modeling/
 ├── README.md
 ```
